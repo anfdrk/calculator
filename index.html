@@ -8,34 +8,35 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="display">1234</div>
+  <div id="small-screen"></div>
+  <div id="main-screen">0</div>
   <div>
-    <button>7</button>
-    <button>8</button>
-    <button>9</button>
-    <button>÷</button>
+    <button data-number>7</button>
+    <button data-number>8</button>
+    <button data-number>9</button>
+    <button data-operator>÷</button>
   </div>
   <div>
-    <button>4</button>
-    <button>5</button>
-    <button>6</button>
-    <button>×</button>
+    <button data-number>4</button>
+    <button data-number>5</button>
+    <button data-number>6</button>
+    <button data-operator>×</button>
   </div>
   <div>
-    <button>1</button>
-    <button>2</button>
-    <button>3</button>
-    <button>-</button>
+    <button data-number>1</button>
+    <button data-number>2</button>
+    <button data-number>3</button>
+    <button data-operator>–</button>
   </div>
   <div>
     <button>.</button>
-    <button>0</button>
-    <button>=</button>
-    <button>+</button>
+    <button data-number>0</button>
+    <button id="equals">=</button>
+    <button data-operator>+</button>
   </div>
   <div>
-    <button>CLEAR</button>
-    <button>DELETE</button>
+    <button id="clear">CLEAR</button>
+    <button id="delete">DELETE</button>
   </div>
 </body>
 <script src="script.js"></script>
