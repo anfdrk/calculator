@@ -1,7 +1,8 @@
 let firstOperand = ''
 let secondOperand = ''
 let currentOperation = null
-let shouldResetScreen = false
+let shouldResetMainScreen = false
+let shouldResetSmallScreen = false
 
 const mainScreen = document.getElementById('main-screen')
 const smallScreen = document.getElementById('small-screen')
@@ -24,17 +25,23 @@ numberButtons.forEach((button) =>
 )
 
 function appendNumber(number) {
-  if (mainScreen.textContent === '0' || shouldResetScreen) resetScreen()
   if (mainScreen.textContent === 'Cannot divide by 0') {
-    resetScreen()
-    smallScreen.textContent = ''
+    resetMainScreen()
+    resetSmallScreen()
   }
+  if (mainScreen.textContent === '0' || shouldResetMainScreen) resetMainScreen()
+  if (shouldResetSmallScreen) resetSmallScreen()
   mainScreen.textContent += number
 }
 
-function resetScreen() {
+function resetMainScreen() {
   mainScreen.textContent = ''
-  shouldResetScreen = false
+  shouldResetMainScreen = false
+}
+
+function resetSmallScreen() {
+  smallScreen.textContent = ''
+  shouldResetSmallScreen = false
 }
 
 function clear() {
@@ -43,16 +50,23 @@ function clear() {
   firstOperand = ''
   secondOperand = ''
   currentOperation = null
-  shouldResetScreen = false
+  shouldResetMainScreen = false
+  shouldResetSmallScreen = false
 }
 
 function setOperation(operator) {
+  if (mainScreen.textContent === '0') {
+    currentOperation = operator
+    smallScreen.textContent = `${firstOperand} ${currentOperation}`
+    return
+  }
   if (currentOperation !== null) calculate()
   if (mainScreen.textContent === 'Cannot divide by 0') return
   firstOperand = mainScreen.textContent
   mainScreen.textContent = '0'
   currentOperation = operator
   smallScreen.textContent = `${firstOperand} ${currentOperation}`
+  shouldResetSmallScreen = false
 }
 
 function calculate() {
@@ -61,7 +75,8 @@ function calculate() {
   mainScreen.textContent = operate(currentOperation, firstOperand, secondOperand)
   smallScreen.textContent = `${firstOperand} ${currentOperation} ${secondOperand} =`
   currentOperation = null
-  shouldResetScreen = true
+  shouldResetMainScreen = true
+  shouldResetSmallScreen = true
 }
 
 function operate(operator, a, b) {
