@@ -11,10 +11,13 @@ const operatorButtons = document.querySelectorAll('[data-operator]')
 const equalsBtn = document.getElementById('equals')
 const clearBtn = document.getElementById('clear')
 const deleteBtn = document.getElementById('delete')
+const decimalBtn = document.getElementById('decimal')
 
 equalsBtn.addEventListener('click', calculate)
 
 clearBtn.addEventListener('click', clear)
+
+decimalBtn.addEventListener('click', insertPoint)
 
 operatorButtons.forEach((button) =>
   button.addEventListener('click', () => setOperation(button.textContent))
@@ -52,6 +55,11 @@ function clear() {
   currentOperation = null
   shouldResetMainScreen = false
   shouldResetSubscreen = false
+}
+
+function insertPoint() {
+  if (mainScreen.textContent.includes('.')) return
+  mainScreen.textContent += '.'
 }
 
 function setOperation(operator) {
