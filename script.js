@@ -12,11 +12,13 @@ const equalsBtn = document.getElementById('equals')
 const clearBtn = document.getElementById('clear')
 const deleteBtn = document.getElementById('delete')
 const decimalBtn = document.getElementById('decimal')
+const percentBtn = document.getElementById('percent')
 
 equalsBtn.addEventListener('click', calculate)
 clearBtn.addEventListener('click', clear)
 decimalBtn.addEventListener('click', insertPoint)
 deleteBtn.addEventListener('click', deleteNumber)
+percentBtn.addEventListener('click', getPercentage)
 
 operatorButtons.forEach((button) =>
   button.addEventListener('click', () => setOperation(button.textContent))
@@ -58,7 +60,23 @@ function clear() {
 
 function deleteNumber() {
   if (mainScreen.textContent === '0') return
+  if (mainScreen.textContent.length === 1) {
+    mainScreen.textContent = '0'
+    return
+  } 
   mainScreen.textContent = mainScreen.textContent.slice(0, -1)
+}
+
+function getPercentage() {
+  if (firstOperand === '') {
+    resetMainScreen()
+    resetSubscreen()
+    mainScreen.textContent = '0'
+    return
+  } else {
+    mainScreen.textContent = roundUp(mainScreen.textContent * firstOperand / 100)
+    // mainScreen.textContent = mainScreen.textContent * firstOperand / 100
+  }
 }
 
 function insertPoint() {
@@ -67,7 +85,7 @@ function insertPoint() {
 }
 
 function setOperation(operator) {
-  if (mainScreen.textContent === '0') {
+  if (mainScreen.textContent === '0' && firstOperand !== '') {
     currentOperation = operator
     subscreen.textContent = `${firstOperand} ${currentOperation}`
     return
@@ -89,6 +107,7 @@ function calculate() {
   currentOperation = null
   shouldResetMainScreen = true
   shouldResetSubscreen = true
+  firstOperand = ''
 }
 
 function operate(operator, a, b) {
@@ -109,18 +128,22 @@ function operate(operator, a, b) {
   }
 }
 
+function roundUp(num) {
+  return Math.round(num * 1000) / 1000
+}
+
 function add(x, y) {
-  return Math.round((x + y) * 1000) / 1000
+  return roundUp(x + y)
 }
 
 function substract(x, y) {
-  return Math.round((x - y) * 1000) / 1000
+  return roundUp(x - y)
 }
 
 function multiply(x, y) {
-  return Math.round((x * y) * 1000) / 1000
+  return roundUp(x * y)
 }
 
 function divide(x, y) {
-  return Math.round((x / y) * 1000) / 1000
+  return roundUp(x / y)
 }
