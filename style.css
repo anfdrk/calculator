@@ -10,7 +10,7 @@ button {
 div {
   margin: 10px;
 }
-#small-screen, #main-screen {
+#subscreen, #main-screen {
   background: aliceblue;
   color: #1f2937;
   width: 210px;

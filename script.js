@@ -2,10 +2,10 @@ let firstOperand = ''
 let secondOperand = ''
 let currentOperation = null
 let shouldResetMainScreen = false
-let shouldResetSmallScreen = false
+let shouldResetSubscreen = false
 
 const mainScreen = document.getElementById('main-screen')
-const smallScreen = document.getElementById('small-screen')
+const subscreen = document.getElementById('subscreen')
 const numberButtons = document.querySelectorAll('[data-number]')
 const operatorButtons = document.querySelectorAll('[data-operator]')
 const equalsBtn = document.getElementById('equals')
@@ -27,10 +27,10 @@ numberButtons.forEach((button) =>
 function appendNumber(number) {
   if (mainScreen.textContent === 'Cannot divide by 0') {
     resetMainScreen()
-    resetSmallScreen()
+    resetSubscreen()
   }
   if (mainScreen.textContent === '0' || shouldResetMainScreen) resetMainScreen()
-  if (shouldResetSmallScreen) resetSmallScreen()
+  if (shouldResetSubscreen) resetSubscreen()
   mainScreen.textContent += number
 }
 
@@ -39,25 +39,25 @@ function resetMainScreen() {
   shouldResetMainScreen = false
 }
 
-function resetSmallScreen() {
-  smallScreen.textContent = ''
-  shouldResetSmallScreen = false
+function resetSubscreen() {
+  subscreen.textContent = ''
+  shouldResetSubscreen = false
 }
 
 function clear() {
   mainScreen.textContent = '0'
-  smallScreen.textContent = ''
+  subscreen.textContent = ''
   firstOperand = ''
   secondOperand = ''
   currentOperation = null
   shouldResetMainScreen = false
-  shouldResetSmallScreen = false
+  shouldResetSubscreen = false
 }
 
 function setOperation(operator) {
   if (mainScreen.textContent === '0') {
     currentOperation = operator
-    smallScreen.textContent = `${firstOperand} ${currentOperation}`
+    subscreen.textContent = `${firstOperand} ${currentOperation}`
     return
   }
   if (currentOperation !== null) calculate()
@@ -65,18 +65,18 @@ function setOperation(operator) {
   firstOperand = mainScreen.textContent
   mainScreen.textContent = '0'
   currentOperation = operator
-  smallScreen.textContent = `${firstOperand} ${currentOperation}`
-  shouldResetSmallScreen = false
+  subscreen.textContent = `${firstOperand} ${currentOperation}`
+  shouldResetSubscreen = false
 }
 
 function calculate() {
   if (currentOperation === null) return
   secondOperand = mainScreen.textContent
   mainScreen.textContent = operate(currentOperation, firstOperand, secondOperand)
-  smallScreen.textContent = `${firstOperand} ${currentOperation} ${secondOperand} =`
+  subscreen.textContent = `${firstOperand} ${currentOperation} ${secondOperand} =`
   currentOperation = null
   shouldResetMainScreen = true
-  shouldResetSmallScreen = true
+  shouldResetSubscreen = true
 }
 
 function operate(operator, a, b) {
@@ -98,17 +98,17 @@ function operate(operator, a, b) {
 }
 
 function add(x, y) {
-  return x + y
+  return Math.round((x + y) * 1000) / 1000
 }
 
 function substract(x, y) {
-  return x - y
+  return Math.round((x - y) * 1000) / 1000
 }
 
 function multiply(x, y) {
-  return x * y
+  return Math.round((x * y) * 1000) / 1000
 }
 
 function divide(x, y) {
-  return x / y
+  return Math.round((x / y) * 1000) / 1000
 }
