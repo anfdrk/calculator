@@ -19,6 +19,7 @@ clearBtn.addEventListener('click', clear)
 decimalBtn.addEventListener('click', insertPoint)
 deleteBtn.addEventListener('click', deleteNumber)
 percentBtn.addEventListener('click', getPercentage)
+document.addEventListener("keydown", handleKeyboardInput)
 
 operatorButtons.forEach((button) =>
   button.addEventListener('click', () => setOperation(button.textContent))
@@ -28,6 +29,28 @@ numberButtons.forEach((button) =>
   button.addEventListener('click', () => appendNumber(button.textContent))
 )
 
+function handleKeyboardInput(e) {
+  if (e.key >= 0 && e.key <= 9) appendNumber(e.key)
+  if (e.key === '=' || e.key === 'Enter') {
+    e.preventDefault()
+    calculate()
+  }
+  if (e.key === 'Backspace') deleteNumber()
+  if (e.key === '.') insertPoint()
+  if (e.key === 'Escape') clear()
+  if (e.key === '%') getPercentage()
+  if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
+    setOperation(convertOperator(e.key))
+    console.log(e.key)
+}
+  
+function convertOperator(keyboardOperator) {
+  if (keyboardOperator === '/') return '÷'
+  if (keyboardOperator === '*') return '×'
+  if (keyboardOperator === '-') return '–'
+  if (keyboardOperator === '+') return '+'
+}
+
 function appendNumber(number) {
   if (mainScreen.textContent === 'Cannot divide by 0') {
     resetMainScreen()
@@ -35,6 +58,7 @@ function appendNumber(number) {
   }
   if (mainScreen.textContent === '0' || shouldResetMainScreen) resetMainScreen()
   if (shouldResetSubscreen) resetSubscreen()
+  if (mainScreen.textContent.length >= 15) return
   mainScreen.textContent += number
 }
 
@@ -75,7 +99,6 @@ function getPercentage() {
     return
   } else {
     mainScreen.textContent = roundUp(mainScreen.textContent * firstOperand / 100)
-    // mainScreen.textContent = mainScreen.textContent * firstOperand / 100
   }
 }
 
