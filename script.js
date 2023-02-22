@@ -14,10 +14,9 @@ const deleteBtn = document.getElementById('delete')
 const decimalBtn = document.getElementById('decimal')
 
 equalsBtn.addEventListener('click', calculate)
-
 clearBtn.addEventListener('click', clear)
-
 decimalBtn.addEventListener('click', insertPoint)
+deleteBtn.addEventListener('click', deleteNumber)
 
 operatorButtons.forEach((button) =>
   button.addEventListener('click', () => setOperation(button.textContent))
@@ -55,6 +54,11 @@ function clear() {
   currentOperation = null
   shouldResetMainScreen = false
   shouldResetSubscreen = false
+}
+
+function deleteNumber() {
+  if (mainScreen.textContent === '0') return
+  mainScreen.textContent = mainScreen.textContent.slice(0, -1)
 }
 
 function insertPoint() {
