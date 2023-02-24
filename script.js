@@ -109,7 +109,7 @@ function getPercentage() {
     mainScreen.textContent = '0'
     return
   } else {
-    mainScreen.textContent = roundUp(mainScreen.textContent * firstOperand / 100)
+    mainScreen.textContent = reduceResult(roundUp(mainScreen.textContent * firstOperand / 100))
   }
 }
 
