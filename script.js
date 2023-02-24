@@ -51,13 +51,13 @@ function convertOperator(keyboardOperator) {
 }
 
 function appendNumber(number) {
-  if (mainScreen.textContent === 'Cannot divide by 0') {
+  if (mainScreen.textContent === '???') {
     resetMainScreen()
     resetSubscreen()
   }
   if (mainScreen.textContent === '0' || shouldResetMainScreen) resetMainScreen()
   if (shouldResetSubscreen) resetSubscreen()
-  if (mainScreen.textContent.length >= 15) return
+  if (mainScreen.textContent.length >= 14) return
   mainScreen.textContent += number
 }
 
@@ -68,6 +68,7 @@ function resetMainScreen() {
 
 function resetSubscreen() {
   subscreen.textContent = ''
+  resizeFont()
   shouldResetSubscreen = false
 }
 
@@ -90,6 +91,17 @@ function deleteNumber() {
   mainScreen.textContent = mainScreen.textContent.slice(0, -1)
 }
 
+function reduceResult(result) {
+  if (result === '???') return '???'
+  return (result.toString().length <= 14) ? result : result.toExponential(8)
+}
+
+function resizeFont() {
+  if (subscreen.textContent.length >= 25) {
+    subscreen.style.fontSize = '13px'
+  } else subscreen.style.fontSize = '18px'
+}
+
 function getPercentage() {
   if (firstOperand === '') {
     resetMainScreen()
@@ -104,6 +116,7 @@ function getPercentage() {
 function insertPoint() {
   if (mainScreen.textContent.includes('.')) return
   mainScreen.textContent += '.'
+  shouldResetMainScreen = false
 }
 
 function setOperation(operator) {
@@ -113,19 +126,21 @@ function setOperation(operator) {
     return
   }
   if (currentOperation !== null) calculate()
-  if (mainScreen.textContent === 'Cannot divide by 0') return
+  if (mainScreen.textContent === '???') return
   firstOperand = mainScreen.textContent
   mainScreen.textContent = '0'
   currentOperation = operator
   subscreen.textContent = `${firstOperand} ${currentOperation}`
+  resizeFont()
   shouldResetSubscreen = false
 }
 
 function calculate() {
   if (currentOperation === null) return
   secondOperand = mainScreen.textContent
-  mainScreen.textContent = operate(currentOperation, firstOperand, secondOperand)
+  mainScreen.textContent = reduceResult(operate(currentOperation, firstOperand, secondOperand))
   subscreen.textContent = `${firstOperand} ${currentOperation} ${secondOperand} =`
+  resizeFont()
   currentOperation = null
   shouldResetMainScreen = true
   shouldResetSubscreen = true
@@ -143,7 +158,7 @@ function operate(operator, a, b) {
     case '×':
       return multiply(a, b)
     case '÷':
-      if (b === 0) return 'Cannot divide by 0'
+      if (b === 0) return '???'
       else return divide(a, b)
     default:
       return null
