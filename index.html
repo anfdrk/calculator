@@ -8,36 +8,34 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="subscreen"></div>
-  <div id="main-screen">0</div>
-  <div>
-    <button data-number>7</button>
-    <button data-number>8</button>
-    <button data-number>9</button>
-    <button data-operator>÷</button>
-  </div>
-  <div>
-    <button data-number>4</button>
-    <button data-number>5</button>
-    <button data-number>6</button>
-    <button data-operator>×</button>
-  </div>
-  <div>
-    <button data-number>1</button>
-    <button data-number>2</button>
-    <button data-number>3</button>
-    <button data-operator>–</button>
-  </div>
-  <div>
-    <button id="decimal">.</button>
-    <button data-number>0</button>
-    <button id="equals">=</button>
-    <button data-operator>+</button>
-  </div>
-  <div>
-    <button id="clear">CLEAR</button>
-    <button id="delete">DELETE</button>
-    <button id="percent">%</button>
+  <div class="main">
+    <div class="calculator">
+      <div class="screen">
+        <div id="subscreen" class="subscreen"></div>
+        <div id="main-screen" class="main-screen">0</div>
+      </div>
+      <div class="buttons">
+        <button id="clear" class="btn-red">AC</button>
+        <button id="delete" class="btn-red">C</button>
+        <button id="percent" class="btn-grey">%</button>
+        <button data-operator class="btn-grey">÷</button>
+        <button data-number class="btn-black">7</button>
+        <button data-number class="btn-black">8</button>
+        <button data-number class="btn-black">9</button>
+        <button data-operator class="btn-grey">×</button>
+        <button data-number class="btn-black">4</button>
+        <button data-number class="btn-black">5</button>
+        <button data-number class="btn-black">6</button>
+        <button data-operator class="btn-grey">–</button>
+        <button data-number class="btn-black">1</button>
+        <button data-number class="btn-black">2</button>
+        <button data-number class="btn-black">3</button>
+        <button data-operator class="btn-grey plus">+</button>
+        <button id="decimal" class="btn-black">.</button>
+        <button data-number class="btn-black">0</button>
+        <button id="equals" class="btn-grey">=</button>
+      </div>
+    </div>
   </div>
 </body>
 <script src="script.js"></script>

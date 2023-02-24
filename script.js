@@ -41,7 +41,6 @@ function handleKeyboardInput(e) {
   if (e.key === '%') getPercentage()
   if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
     setOperation(convertOperator(e.key))
-    console.log(e.key)
 }
   
 function convertOperator(keyboardOperator) {
